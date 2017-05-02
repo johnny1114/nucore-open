@@ -188,7 +188,7 @@ RSpec.describe FacilityReservationsController do
 
     context "redirect on no edit" do
       before :each do
-        @reservation.update_attribute(:canceled_at, Time.zone.now)
+        @reservation.order_detail.update_attributes(canceled_at: Time.zone.now)
       end
 
       it_should_allow :director do
