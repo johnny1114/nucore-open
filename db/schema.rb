@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170421154535) do
+ActiveRecord::Schema.define(version: 20170515214930) do
 
   create_table "account_users", force: :cascade do |t|
     t.integer  "account_id", limit: 4,  null: false
@@ -517,9 +517,6 @@ ActiveRecord::Schema.define(version: 20170421154535) do
     t.datetime "reserve_end_at"
     t.datetime "actual_start_at"
     t.datetime "actual_end_at"
-    t.datetime "canceled_at"
-    t.integer  "canceled_by",      limit: 4
-    t.string   "canceled_reason",  limit: 50
     t.string   "admin_note",       limit: 255
     t.string   "type",             limit: 255
     t.string   "category",         limit: 255
