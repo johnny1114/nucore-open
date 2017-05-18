@@ -29,6 +29,15 @@ class FacilityJournalsController < ApplicationController
   def new_with_search
     set_default_variables
     @layout = "two_column_head"
+
+    set_problem_order_details_export_vars
+    respond_to do |format|
+      format.csv do
+        @show_uid = @journal_rows.joins(order_detail: { order: :user }).where("users.uid IS NOT NULL").any?
+        set_csv_headers("#{@filename}.csv")
+      end
+      format.any {}
+    end
   end
 
   # PUT /facilities/journals/:id
@@ -118,6 +127,16 @@ class FacilityJournalsController < ApplicationController
       journal_date: parse_usa_date(params[:journal_date]),
       order_details_for_creation: order_details_for_creation,
     )
+  end
+
+  def set_problem_order_details_export_vars
+    @journal = Journal.new(
+      created_by: session_user.id,
+      journal_date: parse_usa_date(params[:journal_date]),
+      order_details_for_creation: @problem_order_details,
+    )
+    @journal_rows = @journal.journal_rows
+    @filename = "problem_order_details_#{Time.current.strftime('%Y%m%d')}"
   end
 
   def verify_journal_date_format

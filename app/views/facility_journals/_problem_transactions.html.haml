@@ -3,6 +3,9 @@
     %p.alert.alert-error= t("facility_journals.new.expired_payment")
 .row
   .span12
+    %p= link_to "Download CSV", new_facility_journal_path(format: "csv")
+.row
+  .span12
     = will_paginate(order_details) if order_details.respond_to? :total_pages
     %table.table.table-striped.table-hover.dense.old-table
       %thead
